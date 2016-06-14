@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.model;
 
+import ru.javawebinar.topjava.util.TimeUtil;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,6 +10,8 @@ import java.time.format.DateTimeFormatter;
  * 11.01.2015.
  */
 public class UserMealWithExceed {
+    private final int id;
+
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -16,18 +20,20 @@ public class UserMealWithExceed {
 
     private final boolean exceed;
 
-    public static final DateTimeFormatter FORMATTER =
-            DateTimeFormatter.ofPattern("dd-MM-yy HH:mm");
-
-    public UserMealWithExceed(LocalDateTime dateTime, String description, int calories, boolean exceed) {
+    public UserMealWithExceed(int id, LocalDateTime dateTime, String description, int calories, boolean exceed) {
+        this.id = id;
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
         this.exceed = exceed;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getDateTime() {
-        return dateTime.format(FORMATTER);
+        return dateTime.format(TimeUtil.FORMATTER);
     }
 
     public String getDescription() {

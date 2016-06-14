@@ -10,22 +10,21 @@
         <h2>Meal list</h2>
         <table>
         <c:forEach items="${meals}" var="meal">
-            <c:if test="${meal.exceed}">
-                <tr style="color: red;">
-                    <td>${meal.description}</td>
-                    <td>${meal.calories}</td>
-                    <td>${meal.dateTime}</td>
-                </tr>
-            </c:if>
-            <c:if test="${!meal.exceed}">
-                <tr style="color: green;">
-                    <td>${meal.description}</td>
-                    <td>${meal.calories}</td>
-                    <td>${meal.dateTime}</td>
-                </tr>
-            </c:if>
+            <tr style="color: ${meal.exceed ? "red" : "green"};">
+                <td>${meal.id}</td>
+                <td>${meal.description}</td>
+                <td>${meal.calories}</td>
+                <td>${meal.dateTime}</td>
+                <td>
+                    <a href="meals?action=update&id=<c:out value="${meal.id}"/>">Update</a>
+                </td>
+                <td>
+                    <a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Delete</a>
+                </td>
+            </tr>
         </c:forEach>
         </table>
+        <p><a href="meals?action=add">Add Meal</a></p>
     </body>
 </html>
 
