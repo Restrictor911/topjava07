@@ -10,6 +10,8 @@ import ru.javawebinar.topjava.util.UserMealsUtil;
 import ru.javawebinar.topjava.util.exception.ExceptionUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -28,9 +30,12 @@ public class UserMealServiceImpl implements UserMealService {
                 LoggedUser.getCaloriesPerDay());
     }
 
-    public List<UserMealWithExceed> getFiltered(int userId, LocalTime startTime, LocalTime endTime) {
-        return UserMealsUtil.getFilteredWithExceeded(repository.getAll(userId),
-                startTime, endTime, LoggedUser.getCaloriesPerDay());
+    public List<UserMealWithExceed> getFiltered(int userId, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<UserMealWithExceed> mealsWithExceed = UserMealsUtil
+                .getFilteredWithExceeded(repository.getAll(userId),
+                startDateTime.toLocalTime(), endDateTime.toLocalTime(), LoggedUser.getCaloriesPerDay());
+        return UserMealsUtil.getFilteredByDate(mealsWithExceed,
+                startDateTime.toLocalDate(), endDateTime.toLocalDate());
     }
 
     public UserMeal save(UserMeal userMeal) {

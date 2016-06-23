@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.time.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
@@ -19,6 +19,24 @@
 <section>
     <h2><a href="index.html">Home</a></h2>
     <h3>Meal list</h3>
+    <form method="post" action="meals?action=search">
+        <label>Start time:
+            <input type="time" value="00:00" name="startTime" />
+        </label>
+        <br/>
+        <label>End time:
+            <input type="time" value="23:59" name="endTime" />
+        </label>
+        <br/>
+        <label>Start date:
+            <input type="date" value="2010-01-01" name="startDate" />
+        </label>
+        <br/>
+        <label>End date:
+            <input type="date" value="<%= LocalDate.now() %>" name="endDate" />
+        </label>
+        <input type="submit" value="Find"/>
+    </form>
     <a href="meals?action=create">Add Meal</a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">

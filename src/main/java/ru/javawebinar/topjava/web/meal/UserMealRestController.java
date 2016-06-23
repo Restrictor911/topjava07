@@ -10,6 +10,8 @@ import ru.javawebinar.topjava.service.UserMealService;
 import ru.javawebinar.topjava.to.UserMealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -29,9 +31,10 @@ public class UserMealRestController {
         return service.getAll(LoggedUser.id());
     }
 
-    public List<UserMealWithExceed> getFiltered(LocalTime startTime, LocalTime endTime) {
+    public List<UserMealWithExceed> getFiltered(LocalDateTime startDateTime,
+                                                      LocalDateTime endDateTime) {
         LOG.info("getFilteredMeals");
-        return service.getFiltered(LoggedUser.id(), startTime, endTime);
+        return service.getFiltered(LoggedUser.id(), startDateTime, endDateTime);
     }
 
     public UserMeal create(UserMeal userMeal) {

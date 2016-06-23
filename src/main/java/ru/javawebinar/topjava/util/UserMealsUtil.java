@@ -65,6 +65,14 @@ public class UserMealsUtil {
         return mealExceeded;
     }
 
+    public static List<UserMealWithExceed> getFilteredByDate(
+            Collection<UserMealWithExceed> mealList, LocalDate startDate, LocalDate endDate) {
+        return mealList
+                .stream()
+                .filter(um -> TimeUtil.isBetween(um.getDateTime().toLocalDate(), startDate, endDate))
+                .collect(Collectors.toList());
+    }
+
     public static UserMealWithExceed createWithExceed(UserMeal um, boolean exceeded) {
         return new UserMealWithExceed(um.getId(), um.getDateTime(), um.getDescription(), um.getCalories(), exceeded);
     }
