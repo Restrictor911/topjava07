@@ -1,22 +1,44 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.Digits;
 import java.time.LocalDateTime;
 
 /**
  * GKislin
  * 11.01.2015.
  */
+@NamedQueries({
+        @NamedQuery(name = UserMeal.DELETE, query = "DELETE FROM UserMeal um WHERE um.id=:id AND um.user.id=:userId"),
+        @NamedQuery(name = UserMeal.BY_ID, query = "SELECT um FROM UserMeal um WHERE um.id=:id AND um.user.id=:userId"),
+        @NamedQuery(name = UserMeal.ALL_SORTED, query = "SELECT um FROM UserMeal um WHERE um.user.id=:userId ORDER BY um.dateTime DESC"),
+        @NamedQuery(name = UserMeal.BETWEEN, query = "SELECT um FROM UserMeal um WHERE um.user.id=:userId AND um.dateTime BETWEEN :startDate AND :endDate ORDER BY um.dateTime DESC")
+})
+@Entity
+@Table(name = "meals")
 public class UserMeal extends BaseEntity {
+    public static final String DELETE = "UserMeal.delete";
+    public static final String BY_ID = "UserMeal.get";
+    public static final String ALL_SORTED = "UserMeal.getAll";
+    public static final String BETWEEN = "UserMeal.getBetween";
 
+    @Column(name = "date_time")
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime dateTime;
 
+    @Column(name = "description", nullable = false)
+    @NotEmpty
     private String description;
 
+    @Column(name = "calories")
+    @Digits(fraction = 0, integer = 4)
     protected int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", referencedColumnName="id", nullable=false, updatable=false)
     private User user;
 
     public UserMeal() {
