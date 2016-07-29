@@ -12,23 +12,31 @@
     <div class="container">
         <div class="shadow">
             <h3><fmt:message key="meals.title"/></h3>
-            <form method="post" action="meals/filter">
-                <dl>
-                    <dt>From Date:</dt>
-                    <dd><input type="date" name="startDate" value="${startDate}"></dd>
-                </dl>
-                <dl>
-                    <dt>To Date:</dt>
-                    <dd><input type="date" name="endDate" value="${endDate}"></dd>
-                </dl>
-                <dl>
-                    <dt>From Time:</dt>
-                    <dd><input type="time" name="startTime" value="${startTime}"></dd>
-                </dl>
-                <dl>
-                    <dt>To Time:</dt>
-                    <dd><input type="time" name="endTime" value="${endTime}"></dd>
-                </dl>
+            <form class="form-horizontal" method="post" id="filterForm">
+                <div class="form-group">
+                    <label for="startDate" class="control-label col-sm-3">From Date:</label>
+                    <div class="col-sm-3">
+                        <input type="date" name="startDate" id="startDate" value="${startDate}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="endDate" class="control-label col-sm-3">To Date:</label>
+                    <div class="col-sm-3">
+                        <input type="date" name="endDate" id="endDate" value="${endDate}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="startTime" class="control-label col-sm-3">From Time:</label>
+                    <div class="col-sm-3">
+                        <input type="time" name="startTime" id="startTime" value="${startTime}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="endTime" class="control-label col-sm-3">To Time:</label>
+                    <div class="col-sm-3">
+                        <input type="time" name="endTime" id="endTime" value="${endTime}">
+                    </div>
+                </div>
                 <button type="submit"><fmt:message key="meals.filter"/></button>
             </form>
             <hr>
@@ -47,7 +55,7 @@
                     </thead>
                     <c:forEach items="${mealList}" var="meal">
                         <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.UserMealWithExceed"/>
-                        <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
+                        <tr class="${meal.exceed ? 'exceeded' : 'normal'}" id="${meal.id}">
                             <td>
                                     <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                                     <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
@@ -55,8 +63,8 @@
                             </td>
                             <td>${meal.description}</td>
                             <td>${meal.calories}</td>
-                            <td><a class="btn btn-xs btn-primary edit" id="${meal.id}">Update</a></td>
-                            <td><a class="btn btn-xs btn-danger delete" id="${meal.id}">Delete</a></td>
+                            <td><a class="btn btn-xs btn-primary edit">Update</a></td>
+                            <td><a class="btn btn-xs btn-danger delete">Delete</a></td>
                         </tr>
                     </c:forEach>
                 </table>
