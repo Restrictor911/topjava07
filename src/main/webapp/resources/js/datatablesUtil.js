@@ -4,6 +4,11 @@ function makeEditable() {
     form = $('#detailsForm');
 
     form.submit(function () {
+        var dateTimeField = $("#dateTime");
+        if (dateTimeField) {
+            var date = dateTimeField.val().replace(" ", "T");
+            dateTimeField.val(date);
+        }
         save();
         return false;
     });
